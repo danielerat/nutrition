@@ -61,3 +61,16 @@ class Prescription(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Health(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE, on_delete=models.CASCADE)
+    weight = models.DecimalField(max_digits=5, decimal_places=2)
+    height = models.DecimalField(max_digits=5, decimal_places=2)
+    blood_type = models.CharField(max_length=3, choices=BLOOD_TYPE_CHOICES)
+    date_of_birth = models.DateField()
+
+# Meal Plan
+
+# Patient Meal Plan
