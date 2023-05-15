@@ -105,3 +105,10 @@ class Meal(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Profile():
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE, null=False, blank=False)
+    image = models.ImageField(default="default.jpg",
+                              upload_to=f"profiles/{user.name}")
