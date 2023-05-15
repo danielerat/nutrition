@@ -74,3 +74,34 @@ class Health(models.Model):
 # Meal Plan
 
 # Patient Meal Plan
+
+
+class MealPlan(models.Model):
+    chef = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    patient = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    status = models.CharField(
+        max_length=15, choice=REVIEW_PROCESS_STATUS, default="pending")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+# Patient Meals
+
+
+class Meal(models.Model):
+
+    plan = models.ForeignKey(MealPlan, on_delete=models.CASCADE)
+    type = models.CharField(max_length=20, choices=MEAL_TYPE_CHOICES)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
