@@ -42,3 +42,22 @@ class Appointment(models.Model):
         max_length=15, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+# Patient Prescription
+
+
+class Prescription(models.Model):
+    doctor = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    patient = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='prescriptions')
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    status = models.CharField(
+        max_length=15, choice=REVIEW_PROCESS_STATUS, default="pending")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
