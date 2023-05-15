@@ -55,7 +55,7 @@ class Prescription(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     status = models.CharField(
-        max_length=15, choice=REVIEW_PROCESS_STATUS, default="pending")
+        max_length=15, choices=REVIEW_PROCESS_STATUS, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -64,8 +64,8 @@ class Prescription(models.Model):
 
 
 class Health(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,
-                                on_delete=models.CASCADE, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     weight = models.DecimalField(max_digits=5, decimal_places=2)
     height = models.DecimalField(max_digits=5, decimal_places=2)
     blood_type = models.CharField(max_length=3, choices=BLOOD_TYPE_CHOICES)
@@ -77,14 +77,14 @@ class Health(models.Model):
 
 
 class MealPlan(models.Model):
-    chef = models.ForeignKey(settings.AUTH_USER_MODEL,
+    chef = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="mealplans",
                              on_delete=models.CASCADE)
     patient = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
     status = models.CharField(
-        max_length=15, choice=REVIEW_PROCESS_STATUS, default="pending")
+        max_length=15, choices=REVIEW_PROCESS_STATUS, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
