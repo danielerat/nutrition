@@ -42,7 +42,8 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     'authentication',
-
+    'core',
+    'appointment'
 ]
 
 THIRD_PARTY_APPS = [
