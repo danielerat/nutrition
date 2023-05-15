@@ -56,3 +56,10 @@ class Address(models.Model):
 
     def __str__(self):
         return "{}@{}".format(self.sector, self.street_name)
+
+
+class UserToken(models.Model):
+    user_id = models.IntegerField()
+    token = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expired_at = models.DateTimeField()
