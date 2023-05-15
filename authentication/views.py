@@ -57,3 +57,10 @@ class LoginAPIView(APIView):
         }
 
         return response
+
+
+class UserAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        return Response(UserSerializer(request.user).data)
