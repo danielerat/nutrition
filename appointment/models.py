@@ -1,21 +1,11 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
-from uuid import uuid4
 
 
-DEVICE_CATEGORY_CHOICES = (
-    ("phone", "Phone"),
-    ("computer", "Computer"),
-    ("tablet", "Tablet"),
-    ("accessory", "Accessory"),
-    ("others", "Others"),
-)
 STATUS_CHOICES = (
     ('pending', 'Pending'),
-    ('confirmed', 'Confirmed'),
-    ('completed', 'Completed'),
-    ('cancelled', 'Cancelled'),
+    ('accepted', 'accepted'),
+    ('declined', 'declined')
 )
 # Patient profile
 
@@ -24,7 +14,7 @@ STATUS_CHOICES = (
 # User Requests for an application.
 
 
-class AppointmentApplication():
+class AppointmentApplication(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
