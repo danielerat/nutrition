@@ -7,6 +7,7 @@ class AppointmentSerializer(ModelSerializer):
     class Meta:
         model = AppointmentApplication
         fields = [
+            "id",
             "user",
             "user",
             "title",
