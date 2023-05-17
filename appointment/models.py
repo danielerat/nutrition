@@ -5,7 +5,8 @@ from django.conf import settings
 STATUS_CHOICES = (
     ('pending', 'Pending'),
     ('accepted', 'accepted'),
-    ('declined', 'declined')
+    ('declined', 'declined'),
+    ('cancelled', 'cancelled'),
 )
 # Patient profile
 

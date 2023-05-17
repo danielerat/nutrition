@@ -20,7 +20,6 @@ BLOOD_TYPE_CHOICES = (
 STATUS_CHOICES = (
     ('pending', 'Pending'),
     ('confirmed', 'Confirmed'),
-    ('completed', 'Completed'),
     ('cancelled', 'Cancelled'),
 )
 REVIEW_PROCESS_STATUS = (
@@ -32,6 +31,8 @@ REVIEW_PROCESS_STATUS = (
 
 
 class Appointment(models.Model):
+    doctor = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="appointments", blank=True, null=True, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
