@@ -36,8 +36,8 @@ class Appointment(models.Model):
                              on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
     status = models.CharField(
         max_length=15, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
