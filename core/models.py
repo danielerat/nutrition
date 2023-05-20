@@ -108,7 +108,7 @@ class Meal(models.Model):
         return self.name
 
 
-class Profile():
+class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE, null=False, blank=False)
     image = models.ImageField(default="default.jpg",

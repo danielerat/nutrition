@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import exceptions
 from authentication.authentication import JWTAuthentication, create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
 
-from authentication.serializers import UserSerializer
+from authentication.serializers import UserSerializer, FullUserSerializer
 from authentication.models import Reset, User, UserToken
 
 
@@ -63,7 +63,7 @@ class UserAPIView(APIView):
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
-        return Response(UserSerializer(request.user).data)
+        return Response(FullUserSerializer(request.user).data)
 
 
 class RefreshAPIView(APIView):
