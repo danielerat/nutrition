@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Appointment, MealPlan, Meal
+from .models import Appointment, MealPlan, Meal, Health, Profile
+from authentication.models import User
 from django.db import models
 
 
@@ -46,3 +47,14 @@ class MealPlanAdmin(admin.ModelAdmin):
     ]
     list_filter = ['chef', 'status',  'created_at']
     inlines = [MealInline]
+
+
+admin.site.register(Health)
+
+
+@admin.register(Profile)
+class PatientAdmin(admin.ModelAdmin):
+    list_display = [
+        "user",
+        "image",
+    ]
