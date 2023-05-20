@@ -1,12 +1,12 @@
 
 from rest_framework.serializers import ModelSerializer
 from .models import Appointment
-from authentication.serializers import UserSerializer
+from authentication.serializers import SimpleUserSerializer
 
 
 class AppointmentSerializer(ModelSerializer):
-    user = UserSerializer(read_only=True)
-    doctor = UserSerializer(read_only=True)
+    user = SimpleUserSerializer(read_only=True)
+    doctor = SimpleUserSerializer(read_only=True)
 
     class Meta:
         model = Appointment
