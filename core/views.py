@@ -21,3 +21,14 @@ class MealPlanViewset(ModelViewSet):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
+class MealViewset(ModelViewSet):
+    serializer_class = MealSerializer
+    def get_queryset(self):
+        return Meal.objects.filter(plan_id=self.kwargs['mealplan_pk'])
+    def create(self, request, *args, **kwargs):
+        plan={"plan_id":kwargs.get("mealplan_pk")}
+        serializer = CreateMealSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(**plan)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
