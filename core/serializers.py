@@ -45,7 +45,21 @@ class MealSerializer(ModelSerializer):
     class Meta:
         model = Meal
         fields = ["id","type","name","description","created_at"]
-
+# Serializer to create a mealplan
+class CreateMealPlanSerializer(ModelSerializer):
+    class Meta:
+        model = MealPlan
+        fields = ["chef","patient","title","description","status" ]
+class MealPlanSerializer(ModelSerializer):
+    patient = SimpleUserSerializer(read_only=True)
+    chef = SimpleUserSerializer(read_only=True)
+    meal_set=MealSerializer(read_only=True,many=True)
+    class Meta:
+        model = MealPlan
+        fields = [
+            "id","chef","patient","title","description","status","created_at","meal_set"
+        ]
+    
 
 
 
