@@ -5,6 +5,16 @@ from authentication.models import User
 from .models import Appointment, Health, Meal, MealPlan, Profile
 from authentication.serializers import SimpleUserSerializer
 
+class ProfileSerializer(ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["image"]
+                  
+class HealthSerialzier(ModelSerializer):
+    class Meta:
+        model = Health
+        fields = ["id","weight","height","blood_type","date_of_birth"]
+
 class AppointmentSerializer(ModelSerializer):
     user = SimpleUserSerializer(read_only=True)
     doctor = SimpleUserSerializer(read_only=True)
