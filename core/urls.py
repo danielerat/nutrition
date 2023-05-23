@@ -1,12 +1,10 @@
 from django.urls import path, include
-from .views import AppointmentViewset, HealthViewset, MealPlanViewset, MealViewset, MealplanViewset, PatientViewset
+from .views import AppointmentViewset, HealthViewset, MealPlanViewset, MealViewset, PatientViewset
 from rest_framework_nested import routers
 
 router = routers.DefaultRouter()
 router.register('appointment', AppointmentViewset,
                 basename='appointments')
-router.register('mealplans', MealplanViewset,
-                basename='mealplans')
 router.register('me', PatientViewset,
                 basename='patients')
 

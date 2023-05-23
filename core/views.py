@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import Appointment, Health, Meal,MealPlan
 from authentication.models import User
-from .serializers import AppointmentSerializer, CreateMealPlanSerializer, CreateMealSerializer, HealthSerialzier,MealPlanSerializer, MealSerializer,PatientSerializer
+from .serializers import AppointmentSerializer, HealthSerialzier,MealPlanSerializer,MealSerializer, PatientSerializer
 from rest_framework import  status
 from rest_framework.response import Response
 
@@ -28,24 +28,19 @@ class HealthViewset(ModelViewSet):
             {"detail": "Creation of Health instances is not allowed."},
             status=status.HTTP_405_METHOD_NOT_ALLOWED
         )
+
+        
 class MealPlanViewset(ModelViewSet):
     serializer_class = MealPlanSerializer
     def get_queryset(self):
-        return MealPlan.objects.filter()
-    def create(self, request, *args, **kwargs):
-        serializer = CreateMealPlanSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return MealPlan.objects.filter(patient_id=self.kwargs.get("patient_pk"))
+    def get_serializer_context(self):
+        return {"patient_pk":self.kwargs.get("patient_pk")}
 
 
 class MealViewset(ModelViewSet):
     serializer_class = MealSerializer
     def get_queryset(self):
         return Meal.objects.filter(plan_id=self.kwargs['mealplan_pk'])
-    def create(self, request, *args, **kwargs):
-        plan={"plan_id":kwargs.get("mealplan_pk")}
-        serializer = CreateMealSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(**plan)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    def get_serializer_context(self):
+        return {"plan_pk":self.kwargs.get("mealplan_pk")}

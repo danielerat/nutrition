@@ -35,21 +35,17 @@ class AppointmentSerializer(ModelSerializer):
         ]
 
 
-class CreateMealSerializer(ModelSerializer):
-    class Meta:
-        model = Meal
-        fields = ["plan","type","name","description"]
-
 
 class MealSerializer(ModelSerializer):
     class Meta:
         model = Meal
         fields = ["id","type","name","description","created_at"]
-# Serializer to create a mealplan
-class CreateMealPlanSerializer(ModelSerializer):
-    class Meta:
-        model = MealPlan
-        fields = ["chef","patient","title","description","status" ]
+
+    def create(self, validated_data):
+        plan_pk = self.context['plan_pk']
+        return Meal.objects.create(plan_id=plan_pk, **validated_data)
+
+
 class MealPlanSerializer(ModelSerializer):
     patient = SimpleUserSerializer(read_only=True)
     chef = SimpleUserSerializer(read_only=True)
@@ -59,7 +55,10 @@ class MealPlanSerializer(ModelSerializer):
         fields = [
             "id","chef","patient","title","description","status","created_at","meal_set"
         ]
-    
+    def create(self, validated_data):
+        patient_pk = self.context['patient_pk']
+        return MealPlan.objects.create(patient_id=patient_pk, **validated_data)
+
 
 
 
