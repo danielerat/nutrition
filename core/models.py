@@ -79,7 +79,7 @@ class Health(models.Model):
 
 class MealPlan(models.Model):
     chef = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="mealplans",
-                             on_delete=models.CASCADE)
+                             on_delete=models.CASCADE,null=True,blank=True)
     patient = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
@@ -112,4 +112,4 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE, null=False, blank=False)
     image = models.ImageField(default="default.jpg",
-                              upload_to=f"profiles/{user.name}")
+                              upload_to="profiles/")
