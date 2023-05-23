@@ -1,7 +1,9 @@
+from os import read
 from rest_framework.serializers import ModelSerializer
-from .models import Appointment, Meal, MealPlan
-from authentication.serializers import SimpleUserSerializer
 
+from authentication.models import User
+from .models import Appointment, Health, Meal, MealPlan, Profile
+from authentication.serializers import SimpleUserSerializer
 
 class AppointmentSerializer(ModelSerializer):
     user = SimpleUserSerializer(read_only=True)
@@ -22,17 +24,26 @@ class AppointmentSerializer(ModelSerializer):
             "updated_at"
         ]
 
+
+class CreateMealSerializer(ModelSerializer):
+    class Meta:
+        model = Meal
+        fields = ["plan","type","name","description"]
+
+
 class MealSerializer(ModelSerializer):
     class Meta:
         model = Meal
-        fields = ["type","name","description","created_at"]
+        fields = ["id","type","name","description","created_at"]
 
-class MealPlanSerializer(ModelSerializer):
-    patient = SimpleUserSerializer(read_only=True)
-    chef = SimpleUserSerializer(read_only=True)
-    meal_set=MealSerializer(read_only=True,many=True)
+
+
+
+class PatientSerializer(ModelSerializer):
+    profile=ProfileSerializer(read_only=True)
+    mealplans=MealPlanSerializer(many=True,read_only=True)
+    health=HealthSerialzier(read_only=True)
     class Meta:
-        model = MealPlan
-        fields = [
-            "id","chef","patient","title","description","status","created_at","meal_set"
-        ]
+        model = User
+        fields = ['id', "profile",'first_name', 'last_name',
+                  'email','phone_number', "health","mealplans"  ]
