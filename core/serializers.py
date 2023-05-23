@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Appointment, MealPlan
+from .models import Appointment, Meal, MealPlan
 from authentication.serializers import SimpleUserSerializer
 
 
@@ -22,10 +22,15 @@ class AppointmentSerializer(ModelSerializer):
             "updated_at"
         ]
 
+class MealSerializer(ModelSerializer):
+    class Meta:
+        model = Meal
+        fields = ["type","name","description","created_at"]
 
 class MealPlanSerializer(ModelSerializer):
     patient = SimpleUserSerializer(read_only=True)
     chef = SimpleUserSerializer(read_only=True)
+    meal_set=MealSerializer(read_only=True,many=True)
     class Meta:
         model = MealPlan
         fields = [
