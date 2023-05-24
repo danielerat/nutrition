@@ -1,6 +1,5 @@
-from os import read
 from rest_framework.serializers import ModelSerializer
-
+from rest_framework import serializers 
 from authentication.models import User
 from .models import Appointment, Health, Meal, MealPlan, Profile
 from authentication.serializers import SimpleUserSerializer
@@ -70,3 +69,9 @@ class PatientSerializer(ModelSerializer):
         model = User
         fields = ['id', "profile",'first_name', 'last_name',
                   'email','phone_number', "health","mealplans"  ]
+        
+
+
+class BodyMassSerializer(serializers.Serializer):
+    height = serializers.FloatField()
+    weight = serializers.FloatField()
