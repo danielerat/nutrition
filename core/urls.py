@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import AppointmentViewset, HealthViewset, MealPlanViewset, MealViewset, PatientViewset
+from .views import AppointmentViewset, BodyMassAPIView, HealthViewset, MealPlanViewset, MealViewset, PatientViewset
 from rest_framework_nested import routers
 
 router = routers.DefaultRouter()
@@ -21,4 +21,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(me_router.urls)),
     path('', include(meal_router.urls)),
+    path('body-mass/', BodyMassAPIView.as_view(), name='body_mass'),
+
 ]
