@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-
 MEAL_TYPE_CHOICES = (
     ('breakfast', 'Breakfast'),
     ('lunch', 'Lunch'),
@@ -31,8 +30,9 @@ REVIEW_PROCESS_STATUS = (
 
 
 class Appointment(models.Model):
-    doctor = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name="appointments", blank=True, null=True, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               related_name="appointments", blank=True, null=True,
+                               on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
@@ -51,8 +51,8 @@ class Appointment(models.Model):
 class Prescription(models.Model):
     doctor = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    patient = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='prescriptions')
+    patient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                                related_name='prescriptions')
     title = models.CharField(max_length=100)
     description = models.TextField()
     status = models.CharField(
@@ -79,7 +79,7 @@ class Health(models.Model):
 
 class MealPlan(models.Model):
     chef = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="mealplans",
-                             on_delete=models.CASCADE,null=True,blank=True)
+                             on_delete=models.CASCADE, null=True, blank=True)
     patient = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
