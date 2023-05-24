@@ -16,6 +16,7 @@ python-dotenv = "*"
 whitenoise = "*"
 gunicorn = "*"
 requests = "*"
+autopep8 = "*"
 
 [dev-packages]
 autopep8 = "*"
