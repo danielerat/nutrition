@@ -80,8 +80,6 @@ class Health(models.Model):
 class MealPlan(models.Model):
     chef = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="mealplans",
                              on_delete=models.CASCADE, null=True, blank=True)
-    patient = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
     status = models.CharField(
@@ -106,6 +104,19 @@ class Meal(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class PatientMealplan(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="patient_mealplans")
+    meal_plan = models.ForeignKey(
+        MealPlan, on_delete=models.SET_NULL, null=True, blank=True, related_name="patient_mealplans")
+
+    class Meta:
+        unique_together = ('user', 'meal_plan')
+
+    def __str__(self):
+        return f"{self.user.username}'s Meal Plan"
 
 
 class Profile(models.Model):

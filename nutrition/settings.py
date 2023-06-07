@@ -145,6 +145,13 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 
 }
+# Rest Framework Settings
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'authentication.authentication.JWTAuthentication',
+    ),
+}
 
 # Email Configurations
 EMAIL_HOST = os.environ.get('GMAIL_EMAIL_HOST', '')

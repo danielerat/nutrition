@@ -1,7 +1,24 @@
 from django.contrib import admin
-from .models import Appointment, MealPlan, Meal, Health, Profile
-from authentication.models import User
-from django.db import models
+from .models import Appointment, MealPlan, Meal, Health, PatientMealplan, Profile
+
+
+@admin.register(PatientMealplan)
+class PatientMealplanAdmin(admin.ModelAdmin):
+    list_display = ('get_phone_number', 'get_first_name',
+                    'get_last_name', 'get_meal_plan_id')
+
+    def get_phone_number(self, obj):
+        return obj.user.phone_number
+
+    def get_first_name(self, obj):
+        return obj.user.first_name
+
+    def get_last_name(self, obj):
+        return obj.user.last_name
+
+    def get_meal_plan_id(self, obj):
+        mealplan = obj.meal_plan
+        return f"#{mealplan.id} {mealplan.title}"
 
 
 @admin.register(Appointment)
@@ -34,7 +51,6 @@ class MealInline(admin.TabularInline):
 class MealPlanAdmin(admin.ModelAdmin):
     list_display = [
         "chef",
-        "patient",
         "title",
         "status",
         "created_at",

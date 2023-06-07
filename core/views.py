@@ -38,7 +38,8 @@ class MealPlanViewset(ModelViewSet):
     serializer_class = MealPlanSerializer
 
     def get_queryset(self):
-        return MealPlan.objects.filter(patient_id=self.kwargs.get("patient_pk"))
+        patient_id = self.kwargs.get("patient_pk")
+        return MealPlan.objects.filter(patient_mealplans__user_id=patient_id)
 
     def get_serializer_context(self):
         return {"patient_pk": self.kwargs.get("patient_pk")}
