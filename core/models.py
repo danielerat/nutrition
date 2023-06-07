@@ -111,6 +111,7 @@ class PatientMealplan(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="patient_mealplans")
     meal_plan = models.ForeignKey(
         MealPlan, on_delete=models.SET_NULL, null=True, blank=True, related_name="patient_mealplans")
+    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('user', 'meal_plan')
