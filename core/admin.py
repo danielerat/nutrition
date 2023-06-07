@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Appointment, MealPlan, Meal, Health, PatientMealplan, Profile
+from .models import Appointment, MealPlan, Meal, Health, PatientMealplan, Prescription, Profile
 
 
 @admin.register(PatientMealplan)
@@ -66,6 +66,7 @@ class MealPlanAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Health)
+admin.site.register(Prescription)
 
 
 @admin.register(Profile)
