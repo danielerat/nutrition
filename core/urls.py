@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import AppointmentViewset, BodyMassAPIView, HealthViewset,\
-    MealPlanViewset, MealViewset, PatientViewset
+    MealPlanViewset, MealViewset, PatientViewset, PrescriptionViewset
 
 from rest_framework_nested import routers
 
@@ -14,6 +14,8 @@ me_router = routers.NestedSimpleRouter(
     router, 'me', lookup='patient')
 me_router.register('health', HealthViewset, basename='patient-health')
 me_router.register('mealplan', MealPlanViewset, basename='patient-mealplan')
+me_router.register('prescription', PrescriptionViewset,
+                   basename='patient-prescription')
 
 meal_router = routers.NestedSimpleRouter(
     me_router, 'mealplan', lookup='mealplan')
