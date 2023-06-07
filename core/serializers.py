@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from authentication.models import User
-from .models import Appointment, Health, Meal, MealPlan, PatientMealplan, Profile
+from .models import Appointment, Health, Meal, MealPlan, PatientMealplan, Prescription, Profile
 from authentication.serializers import SimpleUserSerializer
 
 
@@ -37,6 +37,13 @@ class AppointmentSerializer(ModelSerializer):
         ]
 
 
+class PrescriptionSerializer(ModelSerializer):
+    class Meta:
+        model = Prescription
+        fields = ["id", "doctor", "patient", "title",
+                  "description", "status", "created_at"]
+
+
 class MealSerializer(ModelSerializer):
     class Meta:
         model = Meal
@@ -65,11 +72,12 @@ class PatientSerializer(ModelSerializer):
     profile = ProfileSerializer(read_only=True)
     health = HealthSerialzier(read_only=True)
     meal_plans = serializers.SerializerMethodField()
+    prescriptions = PrescriptionSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
         fields = ['id', "profile", 'first_name', 'last_name',
-                  'email', 'phone_number', "health", "meal_plans"]
+                  'email', 'phone_number', "health", "meal_plans", "prescriptions"]
 
     def get_meal_plans(self, obj):
         patient_mealplans = PatientMealplan.objects.filter(user=obj)
