@@ -1,9 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from core.utils.HEALTH_CALCULATOR import HEALTH_CALCULATOR
-from .models import Appointment, Health, Meal, MealPlan
+from .models import Appointment, Health, Meal, MealPlan, Prescription
 from authentication.models import User
-from .serializers import AppointmentSerializer, BodyMassSerializer, HealthSerialzier, MealPlanSerializer, MealSerializer, PatientSerializer
+from .serializers import AppointmentSerializer, BodyMassSerializer, HealthSerialzier, MealPlanSerializer, MealSerializer, PatientSerializer, PrescriptionSerializer
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -12,6 +12,12 @@ class AppointmentViewset(ModelViewSet):
     permission_classes = []
     serializer_class = AppointmentSerializer
     queryset = Appointment.objects.all()
+
+
+class PrescriptionViewset(ModelViewSet):
+    permission_classes = []
+    serializer_class = PrescriptionSerializer
+    queryset = Prescription.objects.all()
 
 
 # Patient Serializer
