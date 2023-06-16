@@ -1,3 +1,4 @@
+from os import read
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from authentication.models import User
@@ -23,9 +24,18 @@ class QuestionairSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    sender = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Message
         fields = ['id', 'sender', 'content', 'created_at']
+
+    def create(self, validated_data):
+        conversation_id = self.context.get('conversation_id')
+        sender = self.context.get('user')
+        message = Message.objects.create(
+            conversation_id=conversation_id, sender=sender, **validated_data)
+        return message
 
 
 class ConversationSerializer(serializers.ModelSerializer):

@@ -1,11 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
-from chat.models import Conversation, Questionnaire
+from chat.models import Conversation, Message
 from core.utils.HEALTH_CALCULATOR import HEALTH_CALCULATOR
 from .models import Appointment, Health, Meal, MealPlan, Prescription
 from authentication.models import User
 from .serializers import AppointmentSerializer, BodyMassSerializer, HealthSerialzier, MealPlanSerializer, MealSerializer, PatientSerializer, PrescriptionSerializer
-from chat.serializers import QuestionairSerializer, ConversationSerializer
+from chat.serializers import MessageSerializer, QuestionairSerializer, ConversationSerializer
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -82,3 +82,14 @@ class ConversationViewset(ModelViewSet):
 
     def get_serializer_context(self):
         return {"user": self.request.user}
+
+
+class MessageViewSet(ModelViewSet):
+    serializer_class = MessageSerializer
+
+    def get_queryset(self):
+        conversation_id = self.kwargs['conversation_pk']
+        return Message.objects.filter(conversation_id=conversation_id)
+
+    def get_serializer_context(self):
+        return {"conversation_id": self.kwargs['conversation_pk'], "user": self.request.user}
