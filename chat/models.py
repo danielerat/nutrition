@@ -53,7 +53,7 @@ class Conversation(models.Model):
     id = models.UUIDField(primary_key=True, editable=False,
                           unique=True, default=uuid4)
     doctor = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doctor_conversations'
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doctor_conversations', null=True, blank=True
     )
     patient = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='patient_conversations'
