@@ -1,9 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
+from chat.models import Conversation, Questionnaire
 from core.utils.HEALTH_CALCULATOR import HEALTH_CALCULATOR
 from .models import Appointment, Health, Meal, MealPlan, Prescription
 from authentication.models import User
 from .serializers import AppointmentSerializer, BodyMassSerializer, HealthSerialzier, MealPlanSerializer, MealSerializer, PatientSerializer, PrescriptionSerializer
+from chat.serializers import QuestionairSerializer, ConversationSerializer
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -70,3 +72,13 @@ class BodyMassAPIView(APIView):
         body_mass = HEALTH_CALCULATOR.calculate_bmi(height, weight)
         response_data = HEALTH_CALCULATOR.parse_bmi(body_mass)
         return Response(response_data, status=status.HTTP_200_OK)
+
+
+class ConversationViewset(ModelViewSet):
+    serializer_class = ConversationSerializer
+
+    def get_queryset(self):
+        return Conversation.objects.filter(patient_id=self.request.user.id)
+
+    def get_serializer_context(self):
+        return {"user": self.request.user}
