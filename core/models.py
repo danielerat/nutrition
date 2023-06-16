@@ -67,10 +67,16 @@ class Prescription(models.Model):
 class Health(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    weight = models.DecimalField(max_digits=5, decimal_places=2)
-    height = models.DecimalField(max_digits=5, decimal_places=2)
-    blood_type = models.CharField(max_length=3, choices=BLOOD_TYPE_CHOICES)
-    date_of_birth = models.DateField()
+    weight = models.DecimalField(
+        max_digits=5, decimal_places=2, null=True, blank=True)
+    height = models.DecimalField(
+        max_digits=5, decimal_places=2, null=True, blank=True)
+    blood_type = models.CharField(
+        max_length=3, choices=BLOOD_TYPE_CHOICES, null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.user.first_name + "'s Health Record@"+self.user.phone_number
 
 # Meal Plan
 
