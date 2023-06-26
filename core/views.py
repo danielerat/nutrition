@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from chat.models import Conversation, Message
+from core.permissions import IsConversationParticipant
 from core.utils.HEALTH_CALCULATOR import HEALTH_CALCULATOR
 from .models import Appointment, Health, Meal, MealPlan, Prescription
 from authentication.models import User
@@ -86,6 +87,7 @@ class ConversationViewset(ModelViewSet):
 
 class MessageViewSet(ModelViewSet):
     serializer_class = MessageSerializer
+    permission_classes = [IsConversationParticipant]
 
     def get_queryset(self):
         conversation_id = self.kwargs['conversation_pk']
