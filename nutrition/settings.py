@@ -78,12 +78,13 @@ WSGI_APPLICATION = 'nutrition.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("DB_ENGINE"),
-        "NAME": os.environ.get("DB_NAME"),
-        "HOST": os.environ.get("DB_HOST"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'nutrition_db',
+        'USER': 'nutrition_user',
+        'PASSWORD': 'nutrition_password',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
