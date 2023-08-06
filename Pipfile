@@ -17,6 +17,7 @@ whitenoise = "*"
 gunicorn = "*"
 requests = "*"
 autopep8 = "*"
+drf-spectacular-sidecar = "*"
 
 [dev-packages]
 autopep8 = "*"
