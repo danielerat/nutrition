@@ -81,7 +81,7 @@ class PatientSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['id', "profile", 'first_name', 'last_name',
-                  'email', 'phone_number', "health", "patient_mealplans", "prescriptions", "patient_conversations"]
+                  'email', 'phone_number', 'account_type', "health", "patient_mealplans", "prescriptions", "patient_conversations"]
 
     def get_patient_mealplans(self, obj):
         patient_mealplans = PatientMealplan.objects.filter(user=obj)
